@@ -1,7 +1,132 @@
-﻿
+﻿@using Kendo.Mvc.UI
+@using KendoUIWeb.Models
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<style>
+    .k-button {
+        text-decoration: none;
+    }
+</style>
 
+<h2>Books</h2>
+
+@(Html.Kendo().Grid<Book>()
+                        .Name("Book_GV")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(p => p.BookId);
+                            columns.Bound(p => p.BookName);
+                            columns.Bound(p => p.BookPrice);
+                //columns.Command(command =>
+                //{
+                //    command.Edit().Text("修改").UpdateText("更新").CancelText("取消");
+                //}).Width(90);
+                //columns.Command(command =>
+                //{
+                //    command.Destroy().Text("刪除");
+                //}).Width(90);
+            })
+                        .ToolBar(toolbar =>
+                        {
+                            @*toolbar.Create().Text("新增");
+                            toolbar.Template(
+                            @<text>
+
+                                <a class="k-button k-pager-refresh-My k-link" title="重新整理" href="#" style="text-decoration:none;">
+                                    <span class="k-icon k-i-refresh"></span>
+                                    重新整理
+                                </a>
+                                <a class='k-button k-button-icontext k-grid-add' href='#' style="text-decoration:none;">
+                                    <span class='k-icon k-add'></span>
+                                    新增
+                                </a>
+
+                            </text>);*@
+                        })
+                                    .Editable(editable =>
+                                    {
+                                        editable.Mode(GridEditMode.PopUp)
+                                                .Window(w =>
+                                                {
+                                                    //w.Title("明細維護");
+                                                    w.Width(420); //自訂
+                                                });
+                                        editable.TemplateName("/CustomerGridEditor/_M010_PopUP_EditPage"); //自訂
+                                        editable.DisplayDeleteConfirmation("確定要刪除此筆記錄");  //刪除事件跳出詢問
+                                    }
+                               )
+                               .Pageable()  //顯示分頁功能
+                               .Sortable()  //欄位排序功能
+                               .Scrollable() //顯示捲軸
+                                             //.ColumnMenu() //自訂呈現欄位
+                                             //.Filterable() //過濾{預設過濾功能全開}
+                               .Filterable( //過濾{指定要開啟的功能}
+                                   filterable =>
+                                       filterable
+                                       .Extra(false)
+                                       .Operators(o =>
+                                       {
+                                           o.ForNumber(q => q.Clear().IsEqualTo("等於")); //數字查詢條件
+                                           o.ForString(q => q.Clear().Contains("包含").IsEqualTo("等於")); //文字查詢條件
+                                           o.ForEnums(q => q.Clear().IsEqualTo("等於")); //下拉查詢條件
+                                       })
+                                       .Messages(m =>
+                                       {   //查詢文字轉換
+                                           m.Info("查詢條件");
+                                           m.SelectValue("-請選擇-");
+                                           m.Filter("查詢");
+                                           m.Clear("清除");
+                                       })
+                               )
+               //.Events(e =>
+               //{
+               //    e.Edit("EditModeEven");
+               //})
+               .HtmlAttributes(new { style = "height:490px;" }) //自訂HTML屬性_Grid欄位高度
+               .DataSource(dataSource => dataSource //資料來源
+               .Ajax()
+               .PageSize(15)
+               .Events(events => events.Error("error_handler").Sync("SaveSync_handler")) //  <-----customize/kendoUI.js 有實作自訂的處理
+               .Model(model => //欄位Model特殊定義
+               {
+                   model.Id(p => p.BookId); //此欄為該table的key
+               })
+                   //.Create(n => n.Action("Create_Supplier", "NW_M010"))  //新增
+                   .Read(n => n.Action("Get_Books", "Home"))  //讀取
+                                                              //.Update(n => n.Action("Update_Supplier", "NW_M010"))  //更新
+                                                              //.Destroy(n => n.Action("Delete_Supplier", "NW_M010"))  //刪除
+               )
+)
+
+@*<script>
+        //設定grid上面的控制項的事件處理
+        var grid = $("#Supplier_GV");
+        // toolbar的 refresh鍵 click處理
+        grid.find(".k-grid-toolbar").on("click", ".k-pager-refresh-My", function (e) {
+            e.preventDefault();
+            grid.data("kendoGrid").dataSource.read(); //刷新grid data
+        });
+
+        //編輯事件(KendoGrid資料編輯 新增和編輯共用)
+        function EditModeEven(e) {
+
+            //新增模式
+            if (e.model.isNew() === true) {
+                $('.k-window-title').text("新增供應商");
+                $('.DataInfoGroup').hide(); //異動時間和人員(編輯查詢用) - 隱藏此欄位,使用者不必填寫
+                //$(e.container).find('.DataInfoGroup').hide();
+            }
+
+            //編輯模式
+            if (e.model.isNew() === false) {
+                $('.k-window-title').text("編輯供應商");
+                $('.PKGroup').hide(); //主鍵值(新增用) - 隱藏此欄位,避免編輯時被修改
+                //$(e.container).find('.PKGroup').hide();
+            }
+
+
+        }
+    </script>*@

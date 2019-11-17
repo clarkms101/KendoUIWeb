@@ -7,6 +7,42 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @*KendoUI*@
+    <link href="~/KendoUI_Resources/css/kendo/2016.2.504/kendo.common.min.css" rel="stylesheet" />
+
+    @*KendoUI Theme*@
+    @*<link href="~/KendoUI_Resources/css/kendo/2016.2.504/kendo.black.min.css" rel="stylesheet"/>*@
+    <link href="~/KendoUI_Resources/css/kendo/2016.2.504/kendo.flat.min.css" rel="stylesheet" />
+    @*<link href="~/KendoUI_Resources/css/kendo/2016.2.504/kendo.bootstrap.min.css" rel="stylesheet" />*@
+    @*<link href="~/KendoUI_Resources/css/kendo/2016.2.504/kendo.default.min.css" rel="stylesheet" />*@
+
+    @*KendoUI-自訂CSS*@
+    <link href="~/KendoUI_Resources/customize/KGPopUpStyle01.css?v=20171105" rel="stylesheet" />
+
+    @*Bootstrap*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    @*KendoUI*@
+    <script src="~/KendoUI_Resources/js/kendo/2016.2.504/jquery.min.js"></script>
+    <script src="~/KendoUI_Resources/js/kendo/2016.2.504/kendo.all.min.js"></script>
+    <script src="~/KendoUI_Resources/js/kendo/2016.2.504/kendo.aspnetmvc.min.js"></script>
+    <script src="~/KendoUI_Resources/js/kendo/2016.2.504/jszip.min.js"></script>
+
+    @*KendoUI-自訂JS*@
+    <script src="~/KendoUI_Resources/customize/kendoUI.js?v=20171103"></script>
+
+    @*KendoUI 中文化*@
+    <script src="~/KendoUI_Resources/zh-TW/cultures/kendo.culture.zh-TW.js" charset="utf-8"></script>
+    <script src="~/KendoUI_Resources/zh-TW/messages/kendo.messages.zh-TW.js" charset="utf-8"></script>
+    <script>kendo.culture("zh-TW");</script>
+
+    @*Bootstrap*@
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -20,8 +56,7 @@
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <ul class="nav navbar-nav"></ul>
             </div>
         </div>
     </div>
@@ -34,7 +69,6 @@
         </footer>
     </div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+
 </body>
 </html>
